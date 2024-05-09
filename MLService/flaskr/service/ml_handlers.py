@@ -16,9 +16,9 @@ def _to_response(model: str, text: str, prediction: str, positive: float, neutra
         'text': text,
         'predicted': prediction,
         'probabilities': {
-            POSITIVE_PRED: positive,
-            NEUTRAL_PRED: neutral,
-            NEGATIVE_PRED: negative
+            POSITIVE_PRED.lower(): positive,
+            NEUTRAL_PRED.lower(): neutral,
+            NEGATIVE_PRED.lower(): negative
         }
     }
 

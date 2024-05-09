@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: MLHandler
+
+server:
+  port: 8080
+  error:
+    path: "/error"
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+logging:
+  level:
+    org.springframework.web: WARN
+    ua.knu: DEBUG
+
+# ---
+internal:
+  url:
+    tokenizer: ${TOKENIZER_URL:http://localhost:5001}
+    mlservice: ${ML_SERVICE_URL:http://localhost:5002}

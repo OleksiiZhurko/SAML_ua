@@ -1,0 +1,46 @@
+"""
+Type for probabilities associated with the prediction
+"""
+type MLModel {
+    name: String!
+    description: String!
+}
+
+"""
+Type for probabilities associated with the prediction
+"""
+type Probabilities {
+    positive: Float!
+    neutral: Float!
+    negative: Float!
+}
+
+"""
+Type for processed text information
+"""
+type ProcessedText {
+    model: String!
+    text: String!
+
+    predicted: String!
+    probabilities: Probabilities!
+}
+
+"""
+Input type for processing texts
+"""
+input ProcessTextsInput {
+    model: String!
+    isInModel: Boolean!
+    texts: [String!]!
+}
+
+"""
+Root type for all queries
+"""
+type Query {
+    "Query to list all available ML models"
+    models: [MLModel!]!
+    "Query to process texts using an ML model"
+    processTexts(input: ProcessTextsInput!): [ProcessedText!]!
+}

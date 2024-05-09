@@ -1,0 +1,51 @@
+import org.gradle.internal.os.OperatingSystem
+
+plugins {
+  id 'java'
+  id 'org.springframework.boot' version '3.2.5'
+  id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'ml.knu'
+
+java {
+  sourceCompatibility = '17'
+}
+
+configurations {
+  compileOnly {
+    extendsFrom annotationProcessor
+  }
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation 'org.springframework.boot:spring-boot-starter-graphql'
+  implementation 'org.springframework.boot:spring-boot-starter-web'
+
+  compileOnly 'org.projectlombok:lombok'
+
+  annotationProcessor 'org.projectlombok:lombok'
+
+  testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  testImplementation 'org.springframework:spring-webflux'
+  testImplementation 'org.springframework.graphql:spring-graphql-test'
+}
+
+tasks.named('test') {
+  useJUnitPlatform()
+}
+
+ext {
+  npxCommand = 'npx'
+}
+
+tasks.register('apidoc', Exec) {
+  if (OperatingSystem.current().isWindows()) {
+    npxCommand = 'npx.cmd'
+  }
+  commandLine(npxCommand, 'spectaql', 'spectaql-config.yml', '-f', 'apiDoc.html')
+}

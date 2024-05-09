@@ -11,19 +11,19 @@ def load_routes(app: Flask) -> None:
     _cleaner: Cleaner = get_cleaner()
     _verifier: ModelTextVerifier = get_model_text_verifier()
 
-    @app.route('/process_texts', methods=['POST'])
+    @app.route('/processTexts', methods=['POST'])
     def process_texts():
         data = request.get_json()
         if not data or 'texts' not in data:
             log.warning(f"Request does not contain values in 'texts'. Full request: {data}")
             return jsonify({"error": "Empty 'texts' array."}), 400
-
+        log.info(f"Request received: '{data}'")
         processed = _cleaner.clean(data['texts'])
 
-        verified = _verifier.verify(processed, 'isInModel' in data and data['isInModel'] is True)
+        verified = _verifier.verify(processed, 'inModel' in data and data['inModel'] is True)
 
         return jsonify(
             {
-                "processed_texts": verified
+                "processed": verified
             }
         )

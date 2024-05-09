@@ -1,0 +1,18 @@
+spectaql:
+  oneFile: true
+  targetDir: src/main/resources/static
+
+introspection:
+  schemaFile: src/main/resources/graphql/schema.graphqls
+  queryNameStrategy: capitalizeFirst
+  fieldExpansionDepth: 999
+  removeTrailingPeriodFromDescription: false
+
+extensions:
+  graphqlScalarExamples: false
+
+info:
+  title: Request Handler for the News Tone Analyzer
+  description: Processes requests to predict the tone of news headlines in Ukrainian.
+  version: 0.1.0
+  x-url: http://127.0.0.1/apidoc

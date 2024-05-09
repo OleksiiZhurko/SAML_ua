@@ -43,7 +43,7 @@ class ModelTextVerifier:
                 if lemma not in self._words:
                     missing.append(lemma)
             if len(missing) > 0:
-                log.warning(f"Missing lemmas {', '.join(missing)} for {entity['text']}")
+                log.warning(f"Missing lemmas '{', '.join(missing)}' for '{entity['text']}'")
             entity['missingLemmas'] = ', '.join(missing)
             entity['isInModel'] = entity['processed'] == ' '.join(missing)
 

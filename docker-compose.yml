@@ -8,7 +8,7 @@ services:
       context: ./Tokenizer
       dockerfile: Dockerfile
     ports:
-      - "5001:5001"
+      - "5001"
     volumes:
       - ./resources/dicts:/app/resources
       - ./resources/logs:/app/logs
@@ -22,31 +22,31 @@ services:
       context: ./MLService
       dockerfile: Dockerfile
     ports:
-      - "5002:5002"
+      - "5002"
     volumes:
       - ./resources/models:/app/resources
       - ./resources/logs:/app/logs
     networks:
       - common-network
 
-#  handler:
-#    image: request-handler-ml
-#    container_name: request-handler-ml-container
-#    build:
-#      context: ./Handler
-#      dockerfile: Dockerfile
-#    environment:
-#      TOKENIZER_URL: ${TOKENIZER_URL:-http://tokenizer:5001}
-#      ML_URL: ${ML_URL:-http://ml:5002}
-#    depends_on:
-#      - tokenizer
-#      - ml
-#    ports:
-#      - "80:8080"
-#    volumes:
-#      - ./resources/logs:/app/logs
-#    networks:
-#      - common-network
+  handler:
+    image: request-handler-ml
+    container_name: request-handler-ml-container
+    build:
+      context: ./MLHandler
+      dockerfile: Dockerfile
+    environment:
+      TOKENIZER_URL: ${TOKENIZER_URL:-http://tokenizer:5001}
+      ML_SERVICE_URL: ${ML_SERVICE_URL:-http://ml:5002}
+    depends_on:
+      - tokenizer
+      - ml
+    ports:
+      - "80:8080"
+    volumes:
+      - ./resources/logs:/app/logs
+    networks:
+      - common-network
 
 
 networks:

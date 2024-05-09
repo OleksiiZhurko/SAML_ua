@@ -13,12 +13,13 @@ def load_routes(app: Flask) -> None:
     @app.route('/predict', methods=['POST'])
     def predict():
         data = request.get_json()
-        if not data or 'toPredict' not in data or 'mlModel' not in data:
+        if not data or 'toPredict' not in data or 'model' not in data:
             log.warning(f"Unexpected data received. Full request: {data}")
             return jsonify({"error": "Unexpected data received"}), 400
+        log.info(f"Request received: {data}")
 
         predicted = _ml_handler.handle(
-            data['mlModel'],
+            data['model'],
             [d['text'] for d in data['toPredict']],
             [d['lemmas'] for d in data['toPredict']]
         )
@@ -33,6 +34,19 @@ def load_routes(app: Flask) -> None:
     def models():
         return jsonify(
             {
-                "models": [ML_RNN, ML_SVM, ML_NB]
+                "models": [
+                    {
+                        "name": ML_RNN,
+                        "description": "78%"
+                    },
+                    {
+                        "name": ML_NB,
+                        "description": "79%"
+                    },
+                    {
+                        "name": ML_SVM,
+                        "description": "80%"
+                    },
+                ]
             }
         )
