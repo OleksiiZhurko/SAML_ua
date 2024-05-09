@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "tokenizer"
+version = "0.1.0"
+description = ""
+authors = ["Oleksii Zhurko"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+spacy = "^3.7.4"
+flask = "^3.0.3"
+# https://spacy.io/models/uk
+uk_core_news_md = { url = "https://github.com/explosion/spacy-models/releases/download/uk_core_news_md-3.7.0/uk_core_news_md-3.7.0.tar.gz" }
+python-dotenv = "^1.0.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^8.2.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

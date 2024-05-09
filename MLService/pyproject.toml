@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "mlservice"
+version = "0.1.0"
+description = ""
+authors = ["Oleksii Zhurko"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.10, <3.12"
+tensorflow = "^2.16.1"
+tensorflow-io-gcs-filesystem = "0.37.0"
+scikit-learn = "^1.4.2"
+flask = "^3.0.3"
+python-dotenv = "^1.0.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^8.2.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

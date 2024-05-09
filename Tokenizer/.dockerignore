@@ -1,0 +1,11 @@
+.idea
+
+tests
+logs
+resources
+
+poetry.lock
+
+Dockerfile
+.dockerignore
+.gitignore
