@@ -9,11 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class RequestHandler {
 
-  public RequestDetails extract(HttpServletRequest request) {
-    Object requestedUri = request.getRequestURI();
-    return extract(null, requestedUri);
-  }
-
   public RequestDetails extractError(HttpServletRequest request) {
     Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
     Object requestedUri = request.getAttribute(RequestDispatcher.ERROR_REQUEST_URI);

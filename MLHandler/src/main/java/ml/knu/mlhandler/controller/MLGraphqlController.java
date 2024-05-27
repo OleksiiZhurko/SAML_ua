@@ -1,5 +1,6 @@
 package ml.knu.mlhandler.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import ml.knu.mlhandler.dto.graphql.MLModel;
 import ml.knu.mlhandler.dto.graphql.ProcessTextsInput;
 import ml.knu.mlhandler.dto.graphql.ProcessedText;
@@ -9,9 +10,9 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Controller
 public class MLGraphqlController {
 
@@ -30,6 +31,7 @@ public class MLGraphqlController {
 
   @QueryMapping
   public List<ProcessedText> processTexts(@Argument("input") ProcessTextsInput input) {
+    log.info("Received to process: {}", input);
     return estimatorService.predict(input);
   }
 }

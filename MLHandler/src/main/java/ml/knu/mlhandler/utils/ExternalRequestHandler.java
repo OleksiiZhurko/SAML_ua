@@ -1,5 +1,6 @@
 package ml.knu.mlhandler.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -8,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 
+@Slf4j
 @Component
 public class ExternalRequestHandler {
 
@@ -21,10 +23,20 @@ public class ExternalRequestHandler {
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
     var request = new HttpEntity<>(body, headers);
-    return Optional.ofNullable(rest.postForObject(url, request, convertTo));
+    try {
+      return Optional.ofNullable(rest.postForObject(url, request, convertTo));
+    } catch (Exception e) {
+      log.warn(e.getMessage());
+      return Optional.empty();
+    }
   }
 
-  public <T, G> Optional<G> get(String url, Class<G> convertTo) {
-    return Optional.ofNullable(rest.getForObject(url, convertTo));
+  public <G> Optional<G> get(String url, Class<G> convertTo) {
+    try {
+      return Optional.ofNullable(rest.getForObject(url, convertTo));
+    } catch (Exception e) {
+      log.warn(e.getMessage());
+      return Optional.empty();
+    }
   }
 }

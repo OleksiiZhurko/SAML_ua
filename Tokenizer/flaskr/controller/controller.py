@@ -2,25 +2,22 @@ import logging as log
 
 from flask import request, jsonify, Flask
 
-from flaskr.config.di import get_cleaner, get_model_text_verifier
 from flaskr.service.cleaner import Cleaner
 from flaskr.service.verifier import ModelTextVerifier
 
 
-def load_routes(app: Flask) -> None:
-    _cleaner: Cleaner = get_cleaner()
-    _verifier: ModelTextVerifier = get_model_text_verifier()
+def load_routes(app: Flask, cleaner: Cleaner, verifier: ModelTextVerifier) -> None:
 
     @app.route('/processTexts', methods=['POST'])
     def process_texts():
         data = request.get_json()
-        if not data or 'texts' not in data:
+        if not data or 'texts' not in data or not data['texts']:
             log.warning(f"Request does not contain values in 'texts'. Full request: {data}")
             return jsonify({"error": "Empty 'texts' array."}), 400
         log.info(f"Request received: '{data}'")
-        processed = _cleaner.clean(data['texts'])
+        processed = cleaner.clean(data['texts'])
 
-        verified = _verifier.verify(processed, 'inModel' in data and data['inModel'] is True)
+        verified = verifier.verify(processed, 'inModel' in data and data['inModel'] is True)
 
         return jsonify(
             {

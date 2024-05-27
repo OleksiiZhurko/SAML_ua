@@ -12,10 +12,10 @@ _lemmatizer: Lemmatizer
 _modelTextVerifier: ModelTextVerifier
 
 
-def _init() -> None:
+def init() -> None:
     global _nlp, _cleaner, _lemmatizer, _modelTextVerifier
 
-    _nlp = spacy.load("uk_core_news_md") # uk_core_news_trf
+    _nlp = spacy.load("uk_core_news_md")  # uk_core_news_trf
     setup_logger()
 
     _lemmatizer = Lemmatizer(nlp=_nlp)

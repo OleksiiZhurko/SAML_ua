@@ -5,6 +5,7 @@ import ml.knu.mlhandler.dto.external.MLResponse;
 import ml.knu.mlhandler.dto.external.MlRequest;
 import ml.knu.mlhandler.dto.external.TokenizeRequest;
 import ml.knu.mlhandler.dto.external.TokenizeResponse;
+import ml.knu.mlhandler.dto.graphql.Probabilities;
 import ml.knu.mlhandler.dto.graphql.ProcessTextsInput;
 import ml.knu.mlhandler.dto.graphql.ProcessedText;
 import ml.knu.mlhandler.utils.ExternalRequestHandler;
@@ -47,7 +48,19 @@ public class EstimatorService {
                 .build())
         .map(request -> requestHandler.post(msServiceUrl, request, MLResponse.class))
         .map(response -> response.map(MLResponse::getPredicted)
-            .orElse(Collections.emptyList()))
-        .orElse(Collections.emptyList());
+            .orElse(prepareUnprocessed(input)))
+        .orElse(prepareUnprocessed(input));
+  }
+
+  private List<ProcessedText> prepareUnprocessed(ProcessTextsInput input) {
+    return input.getTexts().stream()
+        .map(text ->
+            ProcessedText.builder()
+                .model(input.getModel())
+                .predicted("Error")
+                .probabilities(new Probabilities())
+                .text(text)
+                .build())
+        .toList();
   }
 }
