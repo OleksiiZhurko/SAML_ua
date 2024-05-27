@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import React, {useState} from 'react';
 import {
   Box,
   Button,
@@ -46,18 +46,22 @@ export default function App() {
   };
 
   const handleSubmit = async () => {
-    if (selectedQuery === 'processTexts') {
-      const result = await fetchGraphQL(processTextsQuery, {
-        input: {
-          model,
-          isInModel: true,
-          texts
-        }
-      });
-      setResponse(result);
-    } else if (selectedQuery === 'models') {
-      const result = await fetchGraphQL(modelsQuery);
-      setResponse(result);
+    try {
+      if (selectedQuery === 'processTexts') {
+        const result = await fetchGraphQL(processTextsQuery, {
+          input: {
+            model,
+            isInModel: true,
+            texts
+          }
+        });
+        setResponse(result);
+      } else if (selectedQuery === 'models') {
+        const result = await fetchGraphQL(modelsQuery);
+        setResponse(result);
+      }
+    } catch (error) {
+      alert(error);
     }
   };
 

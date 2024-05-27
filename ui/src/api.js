@@ -8,7 +8,7 @@ export async function fetchGraphQL(query, variables = {}) {
   });
 
   if (!response.ok) {
-    throw new Error('Network response was not ok');
+    throw new Error('Network response issue');
   }
 
   return response.json();
