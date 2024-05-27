@@ -42,9 +42,22 @@ services:
       - tokenizer
       - ml
     ports:
-      - "80:8080"
+      - "8080:8080"
     volumes:
       - ./resources/logs:/app/logs
+    networks:
+      - common-network
+
+  ui:
+    image: ui-ml
+    container_name: ui-ml-container
+    build:
+      context: ./ui
+      dockerfile: Dockerfile
+    depends_on:
+      - handler
+    ports:
+      - "80:3000"
     networks:
       - common-network
 
